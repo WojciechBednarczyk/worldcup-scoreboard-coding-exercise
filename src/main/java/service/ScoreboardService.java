@@ -91,8 +91,8 @@ public class ScoreboardService {
         scoreboardData = scoreboardData.entrySet()
                 .stream()
                 .sorted(Comparator.comparingInt((Map.Entry<Long, Match> matchEntry) -> matchEntry.getValue().getScore().getTotalScore())
-                        .reversed()
-                        .thenComparing(matchEntry -> matchEntry.getValue().getCreateTimestamp()))
+                        .thenComparing(matchEntry -> matchEntry.getValue().getCreateTimestamp())
+                        .reversed())
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,

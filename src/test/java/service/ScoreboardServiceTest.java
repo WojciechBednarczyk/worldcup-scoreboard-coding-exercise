@@ -159,10 +159,10 @@ class ScoreboardServiceTest {
         var previousScoreTestData3 = new Score(1,0);
         var scoreTestData4 = new Score(1, 0);
         var previousScoreTestData4 = new Score();
-        var matchDate1 = LocalDateTime.of(2025,6,3,12,0);
-        var matchDate2 = LocalDateTime.of(2025,6,3,14,0);
+        var matchDate1 = LocalDateTime.of(2025,6,3,14,0);
+        var matchDate2 = LocalDateTime.of(2025,6,3,12,0);
         var matchDate3 = LocalDateTime.of(2025,6,3,12,0);
-        var matchDate4 = LocalDateTime.of(2025,6,3,10,0);
+        var matchDate4 = LocalDateTime.of(2025,6,3,16,0);
 
         var matchTestData1 = new Match("TeamA", "TeamB", scoreTestData1, previousScoreTestData1, matchDate1, false);
         var matchTestData2 = new Match("TeamC", "TeamD", scoreTestData2, previousScoreTestData2, matchDate2, false);
