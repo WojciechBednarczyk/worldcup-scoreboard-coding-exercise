@@ -129,6 +129,26 @@ class ScoreboardServiceTest {
         assertThat(result).isEqualTo(expectedResult);
     }
 
+    @Test
+    void shouldUpdateScore() {
+        // given
+        var matchId = 3L;
+        var homeTeamScore = 3;
+        var awayTeamScore = 5;
+        var expectedPreviousHomeTeamScore = 1;
+        var expectedPreviousAwayTeamScore = 1;
+
+        // when
+        var result = service.updateScore(matchId, homeTeamScore, awayTeamScore);
+
+        // then
+        assertThat(result.keySet()).containsExactly(3L,1L,2L,4L);
+        assertThat(result.get(3L).getScore().getHomeTeamScore()).isEqualTo(homeTeamScore);
+        assertThat(result.get(3L).getScore().getAwayTeamScore()).isEqualTo(awayTeamScore);
+        assertThat(result.get(3L).getPreviousScore().getHomeTeamScore()).isEqualTo(expectedPreviousHomeTeamScore);
+        assertThat(result.get(3L).getPreviousScore().getAwayTeamScore()).isEqualTo(expectedPreviousAwayTeamScore);
+    }
+
     private LinkedHashMap<Long, Match> prepareTestData() {
         var scoreboardData = new LinkedHashMap<Long, Match>();
         var scoreTestData1 = new Score(2, 2);
