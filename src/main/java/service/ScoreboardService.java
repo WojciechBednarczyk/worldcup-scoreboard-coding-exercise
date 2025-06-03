@@ -3,6 +3,7 @@ package service;
 import exception.MatchNotFound;
 import exception.MatchScoreCannotBeAdjustedTwiceInARowException;
 import model.Match;
+import model.Score;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -70,6 +71,18 @@ public class ScoreboardService {
         } else {
             throw new MatchScoreCannotBeAdjustedTwiceInARowException(matchId);
         }
+        sortScoreBoard();
+        return scoreboardData;
+    }
+
+    public Map<Long, Match> updateScore(long matchId, int homeTeamScore, int awayTeamScore) {
+        var match = scoreboardData.get(matchId);
+        if (Objects.isNull(match)){
+            throw new MatchNotFound(matchId);
+        }
+        match.setPreviousScore(match.getScore());
+        match.setScore(new Score(homeTeamScore, awayTeamScore));
+        match.setLastUpdateActionReverted(false);
         sortScoreBoard();
         return scoreboardData;
     }
