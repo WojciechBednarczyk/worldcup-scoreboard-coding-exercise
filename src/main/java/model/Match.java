@@ -1,11 +1,15 @@
 package model;
 
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
 public class Match {
 
+    @Getter
     private String homeTeam;
 
+    @Getter
     private String awayTeam;
 
     private Score score;

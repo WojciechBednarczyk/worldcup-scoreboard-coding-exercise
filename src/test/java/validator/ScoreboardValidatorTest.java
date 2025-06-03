@@ -1,5 +1,7 @@
 package validator;
 
+import exception.TeamHasAlreadyGameInProgressException;
+import exception.TeamNamesAreInvalidException;
 import model.Match;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,6 +21,7 @@ class ScoreboardValidatorTest {
                 Arguments.of(null, null),
                 Arguments.of("", ""),
                 Arguments.of("Poland", "Poland"),
+                Arguments.of(" Poland ", "Poland"),
                 Arguments.of("Poland", "poLaNd"),
                 Arguments.of("Poland", null),
                 Arguments.of("Poland", "")
@@ -28,7 +31,9 @@ class ScoreboardValidatorTest {
     private static Stream<Arguments> provideValuesToValidateIfBothTeamsCanStartGame(){
         return Stream.of(
                 Arguments.of("TeamA", "Poland"),
-                Arguments.of("Poland", "TeamA")
+                Arguments.of("Poland", "TeamA"),
+                Arguments.of("Poland", "teamA"),
+                Arguments.of("Poland", "  teamA  ")
         );
     }
 
@@ -58,7 +63,7 @@ class ScoreboardValidatorTest {
     @MethodSource("provideValuesToValidateIfBothTeamsCanStartGame")
     void shouldThrowExceptionWhenOneOfTheTeamsAlreadyHasGameInProgress(String homeTeamName, String awayTeamName) {
         // given
-        var scoreboardData = new HashMap<>();
+        var scoreboardData = new HashMap<Long,Match>();
         var match = new Match("TeamA", "TeamB");
         scoreboardData.put(1L, match);
 
@@ -70,7 +75,7 @@ class ScoreboardValidatorTest {
     @Test
     void shouldReturnTrueWhenBothTeamsCanStartGame() {
         // given
-        var scoreboardData = new HashMap<>();
+        var scoreboardData = new HashMap<Long, Match>();
         var match = new Match("TeamA", "TeamB");
         scoreboardData.put(1L, match);
         var homeTeamName = "Poland";
