@@ -1,5 +1,8 @@
 package model;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class Score {
 
     private Integer homeTeamScore;
