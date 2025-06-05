@@ -3,6 +3,7 @@ package validator;
 import exception.TeamHasAlreadyGameInProgressException;
 import exception.TeamNamesAreInvalidException;
 import model.Match;
+import model.Score;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -34,6 +35,20 @@ class ScoreboardValidatorTest {
                 Arguments.of("Poland", "TeamA"),
                 Arguments.of("Poland", "teamA"),
                 Arguments.of("Poland", "  teamA  ")
+        );
+    }
+
+    private static Stream<Arguments> provideValuesToValidateIfProvidedScoreToUpdateIsNegativeIntegers(){
+        return Stream.of(
+                Arguments.of(-1, 2),
+                Arguments.of(2, -1)
+        );
+    }
+
+    private static Stream<Arguments> provideValuesToValidateIfProvidedScoreToUpdateIsSmallerThanActualScore(){
+        return Stream.of(
+                Arguments.of(1, 0),
+                Arguments.of(0, 1)
         );
     }
 
@@ -86,5 +101,25 @@ class ScoreboardValidatorTest {
 
         // then
         assertThat(result).isTrue();
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideValuesToValidateIfProvidedScoreToUpdateIsNegativeIntegers")
+    void shouldThrowExceptionWhenNegativeIntegersWereProvidedToUpdateScore(Integer homeTeamScore, Integer awayTeamScore) {
+        // given
+        var actualScore = new Score();
+        // when
+        // then
+        assertThrows(ScoreToUpdateCannotBeNegativeIntegersException.class,() -> ScoreboardValidator.validateIfScoreToUpdateIsValid(homeTeamScore,awayTeamScore, actualScore));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideValuesToValidateIfProvidedScoreToUpdateIsSmallerThanActualScore")
+    void shouldThrowExceptionWhenSmallerScoreWasProvidedToUpdateScore(Integer homeTeamScore, Integer awayTeamScore) {
+        // given
+        var actualScore = new Score(2,2);
+        // when
+        // then
+        assertThrows(ScoreToUpdateCannotBeSmallerThanActualScoreException.class,() -> ScoreboardValidator.validateIfScoreToUpdateIsValid(homeTeamScore,awayTeamScore, actualScore));
     }
 }
