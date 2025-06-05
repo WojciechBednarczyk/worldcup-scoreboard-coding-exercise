@@ -1,5 +1,7 @@
 package validator;
 
+import exception.ScoreToUpdateCannotBeNegativeIntegersException;
+import exception.ScoreToUpdateCannotBeSmallerThanActualScoreException;
 import exception.TeamHasAlreadyGameInProgressException;
 import exception.TeamNamesAreInvalidException;
 import model.Match;

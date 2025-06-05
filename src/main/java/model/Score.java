@@ -7,17 +7,17 @@ import lombok.Getter;
 public class Score {
 
     @Getter
-    private Integer homeTeamScore;
+    private int homeTeamScore;
 
     @Getter
-    private Integer awayTeamScore;
+    private int awayTeamScore;
 
     public Score() {
         this.homeTeamScore = 0;
         this.awayTeamScore = 0;
     }
 
-    public Integer getTotalScore() {
+    public int getTotalScore() {
         return homeTeamScore + awayTeamScore;
     }
 }

@@ -4,6 +4,7 @@ import exception.MatchNotFound;
 import exception.MatchScoreCannotBeAdjustedTwiceInARowException;
 import model.Match;
 import model.Score;
+import validator.ScoreboardValidator;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -80,6 +81,7 @@ public class ScoreboardService {
         if (Objects.isNull(match)){
             throw new MatchNotFound(matchId);
         }
+        ScoreboardValidator.validateIfScoreToUpdateIsValid(homeTeamScore,awayTeamScore,match.getScore());
         match.setPreviousScore(match.getScore());
         match.setScore(new Score(homeTeamScore, awayTeamScore));
         match.setLastUpdateActionReverted(false);
