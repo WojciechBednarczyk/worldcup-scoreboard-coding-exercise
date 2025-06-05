@@ -6,7 +6,6 @@ import exception.TeamHasAlreadyGameInProgressException;
 import exception.TeamNamesAreInvalidException;
 import model.Match;
 import model.Score;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -14,7 +13,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.HashMap;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ScoreboardValidatorTest {
@@ -63,19 +61,6 @@ class ScoreboardValidatorTest {
         assertThrows(TeamNamesAreInvalidException.class,() -> ScoreboardValidator.areTeamNamesValid(homeTeamName,awayTeamName));
     }
 
-    @Test
-    void shouldReturnTrueWhenTeamNamesAreValid() {
-        // given
-        var homeTeamName = "Poland";
-        var awayTeamName = "England";
-
-        // when
-        var result = ScoreboardValidator.areTeamNamesValid(homeTeamName, awayTeamName);
-
-        // then
-        assertThat(result).isTrue();
-    }
-
     @ParameterizedTest
     @MethodSource("provideValuesToValidateIfBothTeamsCanStartGame")
     void shouldThrowExceptionWhenOneOfTheTeamsAlreadyHasGameInProgress(String homeTeamName, String awayTeamName) {
@@ -87,22 +72,6 @@ class ScoreboardValidatorTest {
         // when
         // then
         assertThrows(TeamHasAlreadyGameInProgressException.class,() -> ScoreboardValidator.validateIfBothTeamsCanStartGame(homeTeamName,awayTeamName, scoreboardData));
-    }
-
-    @Test
-    void shouldReturnTrueWhenBothTeamsCanStartGame() {
-        // given
-        var scoreboardData = new HashMap<Long, Match>();
-        var match = new Match("TeamA", "TeamB");
-        scoreboardData.put(1L, match);
-        var homeTeamName = "Poland";
-        var awayTeamName = "England";
-
-        // when
-        var result = ScoreboardValidator.validateIfBothTeamsCanStartGame(homeTeamName, awayTeamName, scoreboardData);
-
-        // then
-        assertThat(result).isTrue();
     }
 
     @ParameterizedTest

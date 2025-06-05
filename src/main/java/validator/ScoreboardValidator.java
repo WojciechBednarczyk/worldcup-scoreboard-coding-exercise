@@ -16,7 +16,7 @@ public class ScoreboardValidator {
         throw new IllegalStateException("Utility class");
     }
 
-    public static boolean areTeamNamesValid(String homeTeamName, String awayTeamName) {
+    public static void areTeamNamesValid(String homeTeamName, String awayTeamName) {
         if (Objects.isNull(homeTeamName) || Objects.isNull(awayTeamName) || homeTeamName.isBlank() || awayTeamName.isBlank()) {
             throw new TeamNamesAreInvalidException();
         }
@@ -25,10 +25,9 @@ public class ScoreboardValidator {
         if (formatedHomeTeamName.equals(formatedAwayTeamName)) {
             throw new TeamNamesAreInvalidException();
         }
-        return true;
     }
 
-    public static boolean validateIfBothTeamsCanStartGame(String homeTeamName, String awayTeamName, Map<Long, Match> scoreboardData){
+    public static void validateIfBothTeamsCanStartGame(String homeTeamName, String awayTeamName, Map<Long, Match> scoreboardData){
         var formatedHomeTeamName = formatTeamName(homeTeamName);
         var formatedAwayTeamName = formatTeamName(awayTeamName);
 
@@ -40,7 +39,6 @@ public class ScoreboardValidator {
                 throw new TeamHasAlreadyGameInProgressException(awayTeamName);
             }
         });
-        return true;
     }
     private static String formatTeamName(String teamName) {
         return teamName.replaceAll("\\s", "").toLowerCase();

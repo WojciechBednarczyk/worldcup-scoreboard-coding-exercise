@@ -26,6 +26,8 @@ public class ScoreboardService {
     }
 
     public Map<Long, Match> startMatch(String homeTeamName, String awayTeamName) {
+        ScoreboardValidator.areTeamNamesValid(homeTeamName,awayTeamName);
+        ScoreboardValidator.validateIfBothTeamsCanStartGame(homeTeamName,awayTeamName,scoreboardData);
         var match = new Match(homeTeamName, awayTeamName);
         scoreboardData.put(idSequence, match);
         idSequence += 1;
